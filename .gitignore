@@ -1,0 +1,5 @@
+*.suo
+*/[Oo]bj/
+*/[Bb]in/
+*/[Dd]ebug/
+.DS_Store

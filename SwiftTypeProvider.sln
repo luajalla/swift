@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 11
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SwiftTypeProvider", "SwiftTypeProvider\SwiftTypeProvider.fsproj", "{71990180-6621-4C9A-8110-23A3A785968B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{214F50B5-7607-4B51-9FE4-7910A7BECEC1}"
+	ProjectSection(SolutionItems) = preProject
+		lib\HtmlAgilityPack.dll = lib\HtmlAgilityPack.dll
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{71990180-6621-4C9A-8110-23A3A785968B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71990180-6621-4C9A-8110-23A3A785968B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71990180-6621-4C9A-8110-23A3A785968B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71990180-6621-4C9A-8110-23A3A785968B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
