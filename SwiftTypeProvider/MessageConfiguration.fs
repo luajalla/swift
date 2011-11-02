@@ -37,12 +37,17 @@ module MessageConfiguration =
     /// Swift Handbook url to the required message spec
     let inline createUrl messageNo = Uri ("http://www2.anasys.com/swifthandbook/fmt" + string messageNo + ".html")
 
+    
     /// Asynchronously download the spec and parse the HTML
-    let private downloadDocumentAsync url = async {
-      try let wc = new WebClient()
-          let! html = wc.AsyncDownloadString url
+    let private downloadDocumentAsync url path = async {
+      try 
           let doc = new HtmlDocument()
-          doc.LoadHtml html
+          if not (isNullOrWsp path) && IO.File.Exists path then 
+            doc.LoadHtml (IO.File.ReadAllText path)
+          else 
+            let wc = new WebClient()
+            let! html = wc.AsyncDownloadString url
+            doc.LoadHtml html
           return Some doc
       with _ -> return None }
 
@@ -70,8 +75,8 @@ module MessageConfiguration =
             | _ -> res) []
         |> List.sortBy fst
 
-    let private downloadSpec url = async {
-        let! doc = downloadDocumentAsync url
+    let private downloadSpec url path = async {
+        let! doc = downloadDocumentAsync url path
         match doc with
         | Some spec ->
             let! fields = extractFieldsAsync spec
@@ -80,7 +85,7 @@ module MessageConfiguration =
     }
 
     /// Search for the spec [predifined or SWIFT handbook]
-    let searchForSpec messageNo =
+    let searchForSpec messageNo path =
         match Map.tryFind messageNo predefinedSpecs with
         | Some predifinedSpec -> predifinedSpec
-        | _ -> downloadSpec (createUrl messageNo) |> Async.RunSynchronously   
+        | _ -> downloadSpec (createUrl messageNo) path |> Async.RunSynchronously   

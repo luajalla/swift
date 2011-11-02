@@ -45,3 +45,9 @@ ti.TimeIndicator3 <- 0100
 m202.TimeIndicator <- ti
 
 m202.ToString()
+
+/// Use offline files
+type MT202c = SwiftMessage<202, "..\offline\fmt202.html">
+let m202c = MT202c() 
+m202c.TransactionReferenceNumber <- "110220112235RN201"
+//... init and use the message somehow

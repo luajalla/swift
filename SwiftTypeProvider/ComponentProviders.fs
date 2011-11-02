@@ -117,7 +117,9 @@ module ComponentProviders =
                                HideObjectMethods = true)
 
     /// Provides Static Parameter (mandatory)
-    let inline internal provideStaticParameter name ty = ProvidedStaticParameter(name, ty)
+    let inline internal provideStaticParameter name ty = function
+        | Some defValue -> ProvidedStaticParameter(name, ty, defValue)
+        | None -> ProvidedStaticParameter(name, ty)
 
     /// Provides ToString() for a given implementation
     let inline internal provideToStringMethod invokeCode = 

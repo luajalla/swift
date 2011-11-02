@@ -17,7 +17,10 @@ type public SwiftTypeProvider(cfg: TypeProviderConfig) as this =
     // Get the assembly and namespace used to house the provided types
     let assembly = Assembly.GetExecutingAssembly()
     let rootNamespace = "Swift"
-    let staticParams = [ provideStaticParameter "messageNo" typeof<int> ]
+    let staticParams = [ 
+        provideStaticParameter "messageNo" typeof<int> None
+        provideStaticParameter "path" typeof<string> (Some "")
+    ]
 
     let swiftTy = provideType assembly rootNamespace "SwiftMessage"
     
@@ -25,9 +28,9 @@ type public SwiftTypeProvider(cfg: TypeProviderConfig) as this =
         parameters = staticParams, 
         instantiationFunction = (fun typeName parameterValues ->
           match parameterValues with 
-          | [| :? int as messageNo |] ->  
+          | [| :? int as messageNo; :? string as path |] ->  
             // Search for predifined ones, then online (SWIFT handbook)
-            let spec = searchForSpec messageNo 
+            let spec = searchForSpec messageNo path
                        |> List.sortBy fst
                        |> List.map snd
             let numberOfFields = spec.Length
