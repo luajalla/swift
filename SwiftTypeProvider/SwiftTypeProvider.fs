@@ -45,12 +45,13 @@ type public SwiftTypeProvider(cfg: TypeProviderConfig) as this =
             spec |> List.iteri (fun i (tag, name, formatStr, opt) ->
                 let optional = opt = FieldStatus.Optional
                 let parsedFormat = parseFormat formatStr    
-                let name = if isNullOrWsp name then "Field" + tag else name //For some messages name can be empty       
+                let name = if isNullOrWsp name then "Field" + tag else name //For some messages name can be empty 
+                   
                 match parsedFormat with
                 | Option pname ->
                     toStringImpls.Add (optional, (tag, true, toStringGeneralImpl i, null))
                 | Simple format ->
-                    toStringImpls.Add (optional, (tag, false, toStringImpl format i optional, null)) 
+                    toStringImpls.Add (optional, (tag, false, toStringImpl format i optional (checkIfDate name format), null)) 
                 | Complex (pname, formats) -> 
                     let subtypeToStrings = ResizeArray<_>()
                     let subtype = provideSubtype name
@@ -61,7 +62,7 @@ type public SwiftTypeProvider(cfg: TypeProviderConfig) as this =
                                 provideProperty spName j (Format.Simple format)
                                 |> addXmlDocDelayed (fun () -> sprintf "%s: %d%c" spName format.Count format.Format)
                                 |> subtype.AddMember
-                            subtypeToStrings.Add (toStringImpl format j optional))
+                            subtypeToStrings.Add (toStringImpl format j optional (checkIfDate spName format)))
 
                     subtype.AddMember (provideConstructorForObjArray formats.Length)
                     

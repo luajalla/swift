@@ -1,5 +1,6 @@
 ﻿#r @".\bin\Debug\SwiftTypeProvider.dll"
 
+open System
 open Swift
 open Swift.OptionTypes
 
@@ -34,7 +35,7 @@ m202.TransactionReferenceNumber <- "103020112310RN102"
 let dca = new MT202.ValueDateCurrencyCodeAmount()
 dca.Amount <- 50000M
 dca.CurrencyCode <- "USD"
-dca.ValueDate <- 120418
+dca.ValueDate <- DateTime(2012, 4, 18)
 m202.ValueDateCurrencyCodeAmount <- dca
 
 let ti = new MT202.TimeIndicator()

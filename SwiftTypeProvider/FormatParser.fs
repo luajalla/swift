@@ -71,3 +71,6 @@ module FormatParser =
                 Format.Simple (Seq.head formats) 
             else Format.Complex (formatStr, formats)
         | str -> failwith ("Invalid format string: " + str)
+
+    let inline checkIfDate (str: string) (f: FieldFormat) =
+        str.ToUpper().Contains "DATE" && f.Format = 'n' && (f.Count = 6 || f.Count = 8)
